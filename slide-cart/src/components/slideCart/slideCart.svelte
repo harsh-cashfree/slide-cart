@@ -49,36 +49,21 @@
   let apiData = null;
 
   async function fetchCartData() {
-  try {
-    const apiResponse = await fetch("https://store.codfirm.in/cart.js", {
-      method: "GET",
-      headers: {
-        'accept': '*/*',
-        'accept-language': 'en-US,en;q=0.9,hi;q=0.8',
-        'cookie': 'localization=IN; cart_currency=INR; _shopify_y=2d2d596a-bbd0-4334-9406-a1546b15eb4d; receive-cookie-deprecation=1; skip_shop_pay=false; storefront_digest=b224715b312a3995e02068f9ba81e41ceaf82549b3161c0a391a235b839dbb29; _adt__muid=a6e6a2ad-d73d-4954-da5c-581347479cd4; _ga_6T47D3FTJH=GS1.1.1717066839.47.1.1717068088.0.0.0; secure_customer_sig=; cart=Z2NwLXVzLWVhc3QxOjAxSjZIQzVBQlpIR1NWMThXMTYyQjlTU0Yx%3Fkey%3D67317b4044a484e91ddab6c243908a6b; _gcl_au=1.1.505596497.1721978188.1204964695.1725012463.1725013731; _shopify_ga=_ga=2.116013062.1437752826.1728114524-122490917.1713946248; _tracking_consent=%7B%22con%22%3A%7B%22CMP%22%3A%7B%22a%22%3A%22%22%2C%22m%22%3A%22%22%2C%22p%22%3A%22%22%2C%22s%22%3A%22%22%7D%7D%2C%22v%22%3A%222.1%22%2C%22region%22%3A%22INDL%22%2C%22reg%22%3A%22%22%2C%22purposes%22%3A%7B%22a%22%3Atrue%2C%22p%22%3Atrue%2C%22m%22%3Atrue%2C%22t%22%3Atrue%7D%2C%22display_banner%22%3Afalse%2C%22sale_of_data_region%22%3Afalse%7D; _ga_FE8DK1XK5G=GS1.1.1728114531.10.0.1728114531.0.0.0; _cmp_a=%7B%22purposes%22%3A%7B%22a%22%3Atrue%2C%22p%22%3Atrue%2C%22m%22%3Atrue%2C%22t%22%3Atrue%7D%2C%22display_banner%22%3Afalse%2C%22sale_of_data_region%22%3Afalse%7D; _orig_referrer=; _landing_page=%2F; _gid=GA1.2.544716753.1729159173; _ga_2455566=GS1.1.1729159173.225.1.1729159387.0.0.0; preview_theme=1; _shopify_essential=:AZC1PHnSAAH_S_rpYD6gUTqx4JRZkzJgn8M662F06NEp6-2rVac1m-bj_ZSDvRSgh-FLDhw1n0Io0DpLTvm7Wqpw5rykIBiVgAX_8c4tCyUChxjD2VF078VFNSDkOURDshJcvDK_LfIP3Eji_RRoNgzps0egFRQ-DM-kB20tF5my9J8JZEhtVQFcznErvz-45mE9hGG2PdNkpwk:; cart_sig=81734b1cefb2f4f002832cb9bc3ab70f; _ga_1HN168V0FX=GS1.1.1729161831.136.0.1729161835.0.0.0; _shopify_sa_p=; _ga=GA1.2.122490917.1713946248; _gat=1; keep_alive=5a40248c-9644-4bac-973e-e41fd1dd673f; _shopify_s=4658bae5-acd7-4b8a-90dc-3a20948fcce5; _shopify_sa_t=2024-10-17T17%3A50%3A27.302Z; cart_ts=1729187427; _ga_8CYQ9WPCSK=GS1.2.1729187419.279.1.1729187428.0.0.0',
-        'priority': 'u=1, i',
-        'referer': 'https://store.codfirm.in/cart',
-        'sec-ch-ua': '"Google Chrome";v="129", "Not=A?Brand";v="8", "Chromium";v="129"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"macOS"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
-      },
-    });
+    try {
+      const apiResponse = await fetch(`${window.location.origin}/cart.js`, {
+        method: "GET"
+      });
 
-    if (!apiResponse.ok) {
-      throw new Error(`HTTP error! Status: ${apiResponse.status}`);
+      if (!apiResponse.ok) {
+        throw new Error(`HTTP error! Status: ${apiResponse.status}`);
+      }
+
+      apiData = await apiResponse.json();
+      console.log("CART DATA", apiData); // Handle your JSON response here
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
     }
-
-    apiData = await apiResponse.json();
-    console.log("CART DATA", apiData); // Handle your JSON response here
-  } catch (error) {
-    console.error("Error fetching cart data:", error);
   }
-}
-
 
   onMount(() => {
     fetchCartData();
