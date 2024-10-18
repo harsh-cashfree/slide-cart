@@ -42,7 +42,7 @@
   let totalPrice = 0; // Reactive variable for total price
 
   const storeImage =
-    "https://aestheticnation.co.in/cdn/shop/files/Brand_Logo_-_Aesthetic_Nation.png?v=1666340011&width=200";
+    "https://bellavitaluxury.co.in/cdn/shop/files/Bella_Vita_Logo_360_E_2x_9339a3ea-4875-4f59-a01f-8cff9bff9f9c.png?height=30&v=1713531581";
 
   // Retrieve or initialize Occ Upsell-Cart from sessionStorage
   let occUpsellCartObj = { items: [], total_price: 0 };
@@ -230,7 +230,7 @@
     <!-- Store image and text in a flexbox container -->
     <div class="store-info">
       <img src={storeImage} alt="store" class="store-image" />
-      <p class="store-text">Aesthetic Nation</p>
+      <!-- <p class="store-text">Embark Perfumes</p> -->
     </div>
 
     <div class="upsell-cart-content">
@@ -264,8 +264,11 @@
         />
       {/each}
       {#if addedProducts.length > 0}
-        <h5 style="color: black; margin: 0px; padding: 10px 0;">
-          Products added from Aesthetic Nation
+        <h5
+          style="color: black; margin: 0px; padding: 10px 0; display: flex; justify-content: center"
+        >
+          Products added from
+          <span><img src={storeImage} alt="store" class="store-image" /></span>
         </h5>
         {#each addedProducts as product (product.id)}
           <ProductItem
@@ -305,10 +308,8 @@
 
   /* Resize the store image without cropping */
   .store-image {
-    max-width: 60px; /* Set a maximum width */
-    max-height: 50px; /* Set a maximum height */
-    width: auto; /* Maintain aspect ratio */
-    height: auto; /* Maintain aspect ratio */
+    /* Set a maximum height */
+    width: 104px; /* Maintain aspect ratio */
     object-fit: contain; /* Ensure the image fits within bounds */
     margin-right: 10px;
     margin-left: 10px;

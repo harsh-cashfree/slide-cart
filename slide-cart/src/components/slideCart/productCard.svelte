@@ -51,16 +51,18 @@
   }
 
   .add-to-cart {
-    border: none;
+    border: 1px solid transparent; /* Initial transparent border */
     cursor: pointer;
     border-radius: 4px;
     background-color: white;
     padding: inherit;
-    transition: color 0.3s ease; /* Add smooth color transition */
+    transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .add-to-cart:hover {
     color: blue; /* Change text color to blue on hover */
-    cursor: pointer; /* Ensure cursor becomes a pointer */
+    border-color: black; /* Add a blue border on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
   }
 </style>
+
