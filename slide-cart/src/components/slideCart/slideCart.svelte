@@ -1,4 +1,6 @@
 <script>
+  // @ts-nocheck
+
   import ProductItem from "./ProductItem.svelte";
   import ProductCard from "./ProductCard.svelte";
   import { onMount } from "svelte";
@@ -11,24 +13,24 @@
   let productsLeft = [
     {
       id: 1,
-      variant_id: 44145891803326,
-      store_url: "bellavita.myshopify.com",
+      variant_id: 43081139650605,
+      store_url: "gxwptz-pp.myshopify.com",
       image:
-        "https://cdn.shopify.com/s/files/1/0527/2000/9406/files/air-jordan-1-mid-se-shoes-qG5ltp.webp?v=1715864228",
-      name: "Air Jordan",
+        "https://cdn.shopify.com/s/files/1/0651/6283/8061/files/YSL_Libre_Intense_90-ovlu41s04goc73h34rb2foe8ek9ncfrndpwrfo1d9s.jpg?v=1729156069",
+      name: "Female perfume",
       quantity: 1,
-      amount: 10000,
+      amount: 1000,
       isUpsell: true,
     },
     {
       id: 2,
-      variant_id: 44145891803326,
-      store_url: "bellavita.myshopify.com",
+      variant_id: 43081121726509,
+      store_url: "gxwptz-pp.myshopify.com",
       image:
-        "https://cdn.shopify.com/s/files/1/0527/2000/9406/files/air-jordan-1-mid-se-shoes-qG5ltp.webp?v=1715864228",
-      name: "Air Jordan 2",
+        "https://cdn.shopify.com/s/files/1/0651/6283/8061/files/MDeo.jpg?v=1729153607",
+      name: "Men Deo",
       quantity: 1,
-      amount: 10000,
+      amount: 2000,
       isUpsell: true,
     },
     // Add more products as needed
@@ -48,10 +50,20 @@
   let apiResponse = null;
   let apiData = null;
 
+  const handleCheckoutInit = () => {
+    // * Picking up cart from session storage
+    const cart = JSON.parse(sessionStorage.getItem("Occ Upsell-Cart"));
+    localStorage.setItem("occ-cart", JSON.stringify(cart));
+    window.Occ.RunScript();
+  };
+
   async function fetchCartData() {
     try {
       const apiResponse = await fetch(`${window.location.origin}/cart.js`, {
-        method: "GET"
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       if (!apiResponse.ok) {
@@ -65,8 +77,8 @@
     }
   }
 
-  onMount(() => {
-    fetchCartData();
+  onMount(async () => {
+    await fetchCartData();
     occUpsellCartObj = apiData;
     console.log("APi data", apiData);
     sessionStorage.setItem("Occ Upsell-Cart", JSON.stringify(occUpsellCartObj));
@@ -115,12 +127,17 @@
       quantity: product.quantity,
       line_price: product.amount,
       storeUrl: product.store_url,
+      price: product.amount,
       isUpsell: true,
+      id: product.variant_id,
     });
 
     // Update the total_price
     occUpsellCartObj.total_price += product.amount;
+    occUpsellCartObj.isUpsellCart = true;
     totalPrice = occUpsellCartObj.total_price; // Update reactive variable
+    occUpsellCartObj.items_subtotal_price = occUpsellCartObj.total_price;
+    occUpsellCartObj.original_total_price = occUpsellCartObj.total_price;
 
     // Save the updated cart in sessionStorage
     sessionStorage.setItem("Occ Upsell-Cart", JSON.stringify(occUpsellCartObj));
@@ -164,6 +181,8 @@
 
       // Update the reactive variable
       totalPrice = occUpsellCartObj.total_price;
+      occUpsellCartObj.items_subtotal_price = occUpsellCartObj.total_price;
+      occUpsellCartObj.original_total_price = occUpsellCartObj.total_price;
 
       // Save the updated cart back to sessionStorage
       sessionStorage.setItem(
@@ -268,7 +287,9 @@
     </div>
 
     <div class="cart-footer">
-      <button class="checkout-button">Checkout</button>
+      <button class="checkout-button" on:click={handleCheckoutInit}
+        >Checkout</button
+      >
     </div>
   </div>
 </div>
