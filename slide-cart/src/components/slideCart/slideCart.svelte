@@ -36,6 +36,32 @@
     // Add more products as needed
   ];
 
+  let upsellProducts = [
+    {
+      id: 1,
+      variant_id: 49492951761213,
+      store_url: "gxwptz-pp.myshopify.com",
+      image:
+        "https://cdn.shopify.com/s/files/1/0900/8503/2253/files/protien.jpg?v=1729146536",
+      name: "Protein",
+      quantity: 1,
+      amount: 50000,
+      isUpsell: true,
+    },
+    {
+      id: 2,
+      variant_id: 49493096431933,
+      store_url: "gxwptz-pp.myshopify.com",
+      image:
+        "https://cdn.shopify.com/s/files/1/0900/8503/2253/files/51Pg2o1dF4L._AC_UF1000_1000_QL80.jpg?v=1729148348",
+      name: "Chocolateshake",
+      quantity: 1,
+      amount: 100000,
+      isUpsell: true,
+    },
+    // Add more products as needed
+  ];
+
   let productsRight = []; // Existing products from session storage
   let addedProducts = []; // New products added through "Add to Cart"
 
@@ -227,6 +253,16 @@
       Products you might also like
     </h4>
 
+    <div class="upsell-cart-content">
+      {#each upsellProducts as product (product.id)}
+        <ProductCard
+          image={product.image}
+          name={product.name}
+          addToCart={() => addToCart(product.id)}
+          amount={product.amount}
+        />
+      {/each}
+    </div>
     <!-- Store image and text in a flexbox container -->
     <div class="store-info">
       <img src={storeImage} alt="store" class="store-image" />
@@ -303,7 +339,8 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    justify-content: center;
+    margin-top: 30px;
+    /* justify-content: center; */
   }
 
   /* Resize the store image without cropping */
@@ -372,7 +409,7 @@
   }
 
   .upsell-cart-content {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     overflow-y: auto;
   }
 
